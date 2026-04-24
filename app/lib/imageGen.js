@@ -36,9 +36,7 @@ export async function generateProductImages(title, style = "Studio", count = 3) 
 
     const imagesToGenerate = Math.min(Math.max(1, count), 2);
     const modelNames = [
-        "models/imagen-4.0-generate-001",
-        "models/imagen-4.0-fast-generate-001",
-        "models/imagen-3.0-generate-001",
+        "imagen-4.0-generate-001",
     ];
 
     for (let i = 0; i < imagesToGenerate; i++) {
@@ -46,10 +44,10 @@ export async function generateProductImages(title, style = "Studio", count = 3) 
         for (const modelName of modelNames) {
             try {
                 const response = await ai.models.generateImages({
-                    model: "imagen-4.0-generate-001",
+                    model: modelName,
                     prompt: prompt,
                     config: {
-                        numberOfImages: 1,
+                        numberOfImages: count,
                     },
                 });
 

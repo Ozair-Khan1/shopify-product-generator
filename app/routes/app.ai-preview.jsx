@@ -135,7 +135,7 @@ export default function AIPreviewPage() {
                     <s-card>
                         <s-stack direction="block" gap="base">
                             <s-banner tone="success">
-                                🎉 Your product has been successfully created in Shopify!
+                                Your product has been successfully created in Shopify!
                             </s-banner>
                             <s-paragraph>
                                 The product "<strong>{generatedProduct.title}</strong>" is now
@@ -209,7 +209,7 @@ export default function AIPreviewPage() {
                     onClick={handlePublish}
                     {...(isPublishing ? { loading: true } : {})}
                 >
-                    🚀 Publish to Shopify
+                    Publish to Shopify
                 </s-button>
             </s-stack>
 
@@ -244,13 +244,13 @@ export default function AIPreviewPage() {
                                 onClick={handlePublish}
                                 {...(isPublishing ? { loading: true } : {})}
                             >
-                                🚀 Publish to Shopify
+                                Publish to Shopify
                             </s-button>
                             <s-button variant="tertiary" href="/app/ai">
-                                ← Create New Product
+                                Create New Product
                             </s-button>
                             <s-button variant="tertiary" tone="critical" onClick={handleDelete}>
-                                🗑️ Delete Draft
+                                Delete Draft
                             </s-button>
                         </s-stack>
                     </s-card>

@@ -9,7 +9,7 @@ export default function AIPreview({ productData }) {
         <s-stack direction="block" gap="base">
             {productData.imageError && (
                 <s-banner tone="notice">
-                    ℹ️ {productData.imageError}
+                    {productData.imageError}
                 </s-banner>
             )}
             {/* Description Card */}

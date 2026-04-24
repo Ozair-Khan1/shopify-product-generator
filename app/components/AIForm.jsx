@@ -53,7 +53,7 @@ export default function AIForm({ isLoading }) {
                         disabled={!title || isLoading}
                         size="large"
                     >
-                        ✨ Generate Product with AI
+                        Generate Product with AI
                     </Button>
                 </FormLayout>
             </BlockStack>

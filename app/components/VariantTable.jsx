@@ -1,7 +1,4 @@
-/**
- * Variant Table Component
- * Displays and allows editing of AI-generated product variants.
- */
+
 export default function VariantTable({ variants = [], onVariantChange }) {
     if (!variants || variants.length === 0) {
         return null;

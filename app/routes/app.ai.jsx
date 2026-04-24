@@ -132,11 +132,11 @@ export default function AIGeneratorPage() {
                                     onClick={handleGenerate}
                                     {...(isSubmitting ? { loading: true } : {})}
                                 >
-                                    ✨ Generate Product with AI
+                                    Generate Product
                                 </s-button>
 
                                 <s-button variant="tertiary" href="/app/settings">
-                                    ⚙️ AI Settings
+                                    Settings
                                 </s-button>
                             </s-stack>
                         </s-stack>
@@ -146,11 +146,10 @@ export default function AIGeneratorPage() {
                         <s-banner tone="info">
                             <s-stack direction="block" gap="tight">
                                 <s-text variant="headingSm">
-                                    🤖 AI is generating your product...
+                                    Generating your product...
                                 </s-text>
                                 <s-paragraph>
-                                    This may take 15-30 seconds. We're generating the description,
-                                    images, variants, and pricing for your product.
+                                    This may take 15-30 seconds.
                                 </s-paragraph>
                             </s-stack>
                         </s-banner>

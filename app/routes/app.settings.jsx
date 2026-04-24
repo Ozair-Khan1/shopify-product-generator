@@ -74,9 +74,9 @@ export default function SettingsPage() {
     };
 
     return (
-        <s-page heading="AI Settings" backAction={{ url: "/app" }}>
+        <s-page heading="Settings" backAction={{ url: "/app" }}>
             <s-section heading="Configure AI Generation Preferences">
-                <s-stack direction="block" gap="loose">
+                <s-stack direction="block" gap="base">
                     {actionData?.success && (
                         <s-banner tone="success" dismissible>
                             Settings saved successfully!
@@ -145,16 +145,31 @@ export default function SettingsPage() {
                             <s-paragraph>
                                 How many product images should the AI generate? (1–6)
                             </s-paragraph>
-                            <s-range-slider
-                                label="Image Count"
+                            <s-select
+                                label="Number of Images"
                                 name="imageCount"
-                                min={1}
-                                max={6}
-                                step={1}
                                 value={imageCount}
-                                onInput={(e) => setImageCount(parseInt(e.currentTarget.value, 10))}
-                                output
-                            />
+                                onInput={(e) => setImageCount(e.currentTarget.value)}
+                            >
+                                <s-option value="1" {...(imageCount === "1" ? { selected: true } : {})}>
+                                    1
+                                </s-option>
+                                <s-option value="2" {...(imageCount === "2" ? { selected: true } : {})}>
+                                    2
+                                </s-option>
+                                <s-option value="3" {...(imageCount === "3" ? { selected: true } : {})}>
+                                    3
+                                </s-option>
+                                <s-option value="4" {...(imageCount === "4" ? { selected: true } : {})}>
+                                    4
+                                </s-option>
+                                <s-option value="5" {...(imageCount === "5" ? { selected: true } : {})}>
+                                    5
+                                </s-option>
+                                <s-option value="6" {...(imageCount === "6" ? { selected: true } : {})}>
+                                    6
+                                </s-option>
+                            </s-select>
                         </s-stack>
                     </s-card>
 
