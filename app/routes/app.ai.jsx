@@ -59,7 +59,6 @@ export const action = async ({ request }) => {
             imageError = `Image generation failed: ${imgError.message}`;
         }
 
-        // Step 3: Save to database as draft
         const generatedProduct = await prisma.generatedProduct.create({
             data: {
                 shop,
@@ -74,7 +73,6 @@ export const action = async ({ request }) => {
             },
         });
 
-        // Redirect to preview page
         return redirect(`/app/ai-preview?id=${generatedProduct.id}`);
     } catch (error) {
         console.error("AI generation error:", error);

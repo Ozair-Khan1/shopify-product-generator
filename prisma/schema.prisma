@@ -38,7 +38,7 @@ model AiSettings {
   shop            String  @unique
   tone            String  @default("SEO-rich")
   imageStyle      String  @default("Studio")
-  imageCount      Int     @default(3)
+  imageCount      Int     @default(1)
   pricingStrategy String  @default("Medium")
 }
 
