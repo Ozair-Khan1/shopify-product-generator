@@ -73,7 +73,7 @@ export const action = async ({ request }) => {
             },
         });
 
-        return redirect(`/app/ai-preview?id=${generatedProduct.id}`);
+        return redirect(`/app/preview?id=${generatedProduct.id}`);
     } catch (error) {
         console.error("AI generation error:", error);
         if (error.status === 429) {

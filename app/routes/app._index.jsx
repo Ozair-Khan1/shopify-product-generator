@@ -138,7 +138,7 @@ export default function Dashboard() {
                       {gen.status === "draft" ? (
                         <s-button
                           variant="tertiary"
-                          href={`/app/ai-preview?id=${gen.id}`}
+                          href={`/app/preview?id=${gen.id}`}
                           size="slim"
                         >
                           Preview

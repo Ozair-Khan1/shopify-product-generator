@@ -16,7 +16,6 @@ function getGenAI() {
 }
 
 /**
- * Generate full product data from a title using Gemini.
  * @param {string} title - The product title
  * @param {object} settings - AI settings (tone, pricingStrategy)
  * @returns {Promise<object>} Structured product data
@@ -42,7 +41,7 @@ Generate a COMPLETE product listing with the following requirements:
 
 5. **Tags**: Generate 5-8 relevant product tags for categorization and search.
 
-6. **Variants**: Suggest 2-4 logical product variants. Each variant should have:
+6. **Variants**: Suggest 2-4 logical product variants. CRITICAL: All variants for a single product MUST share the same option type (e.g., if one is "Size", all others must also use "Size"). Each variant should have:
    - A descriptive name
    - Option type (e.g., "Size", "Color", "Plan", "Storage", "Material")
    - Option value
@@ -72,8 +71,6 @@ Return ONLY valid JSON in this exact structure:
 }`;
 
     console.log("Generating product data for:", title);
-
-    // Try these models in order until one works
     const modelNames = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-2.0-flash-exp", "gemini-2.5-flash-exp"];
     let lastError = null;
 

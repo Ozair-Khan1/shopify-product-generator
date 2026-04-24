@@ -59,7 +59,7 @@ export async function generateProductImages(title, style = "Studio", count = 3) 
                         });
                     }
                     success = true;
-                    break; // Success with this model, move to next image
+                    break;
                 }
             } catch (error) {
                 console.error(`Imagen attempt with ${modelName} failed!`);
@@ -69,7 +69,7 @@ export async function generateProductImages(title, style = "Studio", count = 3) 
                     console.error("Error Response Data:", JSON.stringify(error.response.data, null, 2));
                 }
                 if (error.message?.includes("not found") || error.status === 404) {
-                    continue; // Try next model name
+                    continue;
                 }
                 if (error.status === 429 || error.message?.includes("quota")) {
                     console.warn("Imagen quota exceeded. Stopping image generation.");

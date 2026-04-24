@@ -7,22 +7,30 @@
  * @returns {Promise<{productId: string, handle: string}>}
  */
 export async function createFullProduct(admin, productData, images = []) {
-    // Step 1: Determine option name from variants
+    // Step 1: Determine unique option names from all variants
     const optionTypes = [
-        ...new Set(productData.variants.map((v) => v.optionType)),
-    ];    
+        ...new Set(productData.variants.map((v) => v.optionType || "Option")),
+    ];
 
     // Build variants array for productSet
-    const variants = productData.variants.map((v, index) => ({
-        optionValues: [
-            {
-                name: v.optionValue,
-                optionName: v.optionType,
-            },
-        ],
-        price: parseFloat(v.price).toFixed(2),
-        position: index + 1,
-    }));
+    // Every variant MUST have an option value for EVERY option name defined in productOptions
+    const variants = productData.variants.map((v, index) => {
+        const optionValues = optionTypes.map((optType) => {
+            // Find if this variant has this specific option type
+            // AI structure currently only provides one type/value per variant,
+            // so we use the variant's value if it matches the type, otherwise a default.
+            return {
+                name: v.optionType === optType ? v.optionValue : "Default",
+                optionName: optType,
+            };
+        });
+
+        return {
+            optionValues,
+            price: parseFloat(v.price).toFixed(2),
+            position: index + 1,
+        };
+    });
 
     // Step 2: Create the product using productSet mutation
     const productSetResponse = await admin.graphql(
@@ -64,9 +72,16 @@ export async function createFullProduct(admin, productData, images = []) {
                     },
                     productOptions: optionTypes.map((optType) => ({
                         name: optType,
-                        values: productData.variants
-                            .filter((v) => v.optionType === optType)
-                            .map((v) => ({ name: v.optionValue })),
+                        values: [
+                            ...new Set(
+                                variants.map(
+                                    (v) =>
+                                        v.optionValues.find(
+                                            (ov) => ov.optionName === optType
+                                        ).name
+                                )
+                            ),
+                        ].map((val) => ({ name: val })),
                     })),
                     variants: variants,
                 },
@@ -98,9 +113,6 @@ export async function createFullProduct(admin, productData, images = []) {
     };
 }
 
-/**
- * Upload images to a Shopify product using staged uploads.
- */
 async function uploadProductImages(admin, productId, images) {
     // Step 1: Create staged upload targets
     const stagedUploadsResponse = await admin.graphql(

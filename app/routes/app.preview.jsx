@@ -66,13 +66,12 @@ export const action = async ({ request }) => {
 
     if (intent === "publish") {
         try {
-            // Use updated variants if provided
             let variants = aiPayload.variants;
             if (variantsJson) {
                 try {
                     variants = JSON.parse(variantsJson);
                 } catch (e) {
-                    // Use original variants if parsing fails
+                    console.error("Failed to parse variants JSON:", e);
                 }
             }
 
@@ -87,7 +86,6 @@ export const action = async ({ request }) => {
                 aiPayload.images || []
             );
 
-            // Update the database record
             await prisma.generatedProduct.update({
                 where: { id },
                 data: {
@@ -191,11 +189,16 @@ export default function AIPreviewPage() {
         submit(formData, { method: "post" });
     };
 
+    const handleRedirect = () => {
+        return redirect('/app/ai');
+    }
+
     const handleDelete = () => {
         const formData = new FormData();
         formData.append("intent", "delete");
         formData.append("id", generatedProduct.id);
         submit(formData, { method: "post" });
+        handleRedirect()
     };
 
     return (
