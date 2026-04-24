@@ -135,7 +135,7 @@ export default function AIGeneratorPage() {
                                     Generate Product
                                 </s-button>
 
-                                <s-button variant="tertiary" href="/app/settings">
+                                <s-button variant="secondary" href="/app/settings">
                                     Settings
                                 </s-button>
                             </s-stack>

@@ -45,32 +45,36 @@ export default function Dashboard() {
       </s-button>
 
       <s-section heading="Overview">
-        <s-stack direction="inline" gap="large" wrap>
-          <s-card>
-            <s-stack direction="block" gap="tight">
-              <s-text variant="headingLg">{stats.totalGenerated}</s-text>
-              <s-text variant="bodySm" tone="subdued">
-                Total Generated
-              </s-text>
-            </s-stack>
-          </s-card>
-          <s-card>
-            <s-stack direction="block" gap="tight">
-              <s-text variant="headingLg">{stats.totalPublished}</s-text>
-              <s-text variant="bodySm" tone="subdued">
-                Published to Shopify
-              </s-text>
-            </s-stack>
-          </s-card>
-          <s-card>
-            <s-stack direction="block" gap="tight">
-              <s-text variant="headingLg">{stats.totalDrafts}</s-text>
-              <s-text variant="bodySm" tone="subdued">
-                Drafts
-              </s-text>
-            </s-stack>
-          </s-card>
-        </s-stack>
+        <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+          <s-stack direction="inline" gap="large" wrap>
+            <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '100%', gap: '100px' }}>
+              <s-card>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "4px", justifyContent: 'center' }}>
+                  <s-text variant="headingLg">{stats.totalGenerated}</s-text>
+                  <s-text variant="bodySm" tone="subdued">
+                    Total Generated
+                  </s-text>
+                </div>
+              </s-card>
+              <s-card>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "4px", justifyContent: 'center' }}>
+                  <s-text variant="headingLg">{stats.totalPublished}</s-text>
+                  <s-text variant="bodySm" tone="subdued">
+                    Published to Shopify
+                  </s-text>
+                </div>
+              </s-card>
+              <s-card>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "4px", justifyContent: 'center' }}>
+                  <s-text variant="headingLg">{stats.totalDrafts}</s-text>
+                  <s-text variant="bodySm" tone="subdued">
+                    Drafts
+                  </s-text>
+                </div>
+              </s-card>
+            </div>
+          </s-stack>
+        </div>
       </s-section>
 
       {/* Recent Generations */}
