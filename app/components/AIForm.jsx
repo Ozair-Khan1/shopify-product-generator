@@ -9,10 +9,7 @@ import {
     Text,
 } from "@shopify/polaris";
 
-/**
- * AI Generator Form Component
- * Simple input for product title and generate button.
- */
+
 export default function AIForm({ isLoading }) {
     const [title, setTitle] = useState("");
     const submit = useSubmit();

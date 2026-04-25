@@ -15,14 +15,15 @@ function getGenAI() {
     return genaiInstance;
 }
 
+
 /**
  * Generate product images using Gemini Imagen.
- * @param {string} title - The product title
- * @param {string} style - Image style: "Studio", "3D", "Lifestyle"
- * @param {number} count - Number of images to generate (1-6)
+ * @param {string} title
+ * @param {string} style
+ * @param {number} count
  * @returns {Promise<Array<{base64: string, mimeType: string}>>}
  */
-export async function generateProductImages(title, style = "Studio", count = 3) {
+export async function generateProductImages(title, style = "Studio", count) {
     const ai = getGenAI();
 
     const stylePrompts = {
@@ -34,47 +35,42 @@ export async function generateProductImages(title, style = "Studio", count = 3) 
     const prompt = stylePrompts[style] || stylePrompts.Studio;
     const images = [];
 
-    const imagesToGenerate = Math.min(Math.max(1, count), 2);
     const modelNames = [
         "imagen-4.0-generate-001",
     ];
 
-    for (let i = 0; i < imagesToGenerate; i++) {
-        let success = false;
-        for (const modelName of modelNames) {
-            try {
-                const response = await ai.models.generateImages({
-                    model: modelName,
-                    prompt: prompt,
-                    config: {
-                        numberOfImages: count,
-                    },
-                });
+    for (const modelName of modelNames) {
+        try {
+            const response = await ai.models.generateImages({
+                model: modelName,
+                prompt: prompt,
+                config: {
+                    numberOfImages: count,
+                },
+            });
 
-                if (response.generatedImages && response.generatedImages.length > 0) {
-                    for (const img of response.generatedImages) {
-                        images.push({
-                            base64: img.image.imageBytes,
-                            mimeType: "image/png",
-                        });
-                    }
-                    success = true;
-                    break;
+            if (response.generatedImages && response.generatedImages.length > 0) {
+                for (const img of response.generatedImages) {
+                    images.push({
+                        base64: img.image.imageBytes,
+                        mimeType: "image/png",
+                    });
                 }
-            } catch (error) {
-                console.error(`Imagen attempt with ${modelName} failed!`);
-                console.error("Error Message:", error.message);
-                console.error("Error Status:", error.status);
-                if (error.response) {
-                    console.error("Error Response Data:", JSON.stringify(error.response.data, null, 2));
-                }
-                if (error.message?.includes("not found") || error.status === 404) {
-                    continue;
-                }
-                if (error.status === 429 || error.message?.includes("quota")) {
-                    console.warn("Imagen quota exceeded. Stopping image generation.");
-                    return images;
-                }
+                break;
+            }
+        } catch (error) {
+            console.error(`Imagen attempt with ${modelName} failed!`);
+            console.error("Error Message:", error.message);
+            console.error("Error Status:", error.status);
+            if (error.response) {
+                console.error("Error Response Data:", JSON.stringify(error.response.data, null, 2));
+            }
+            if (error.message?.includes("not found") || error.status === 404) {
+                continue;
+            }
+            if (error.status === 429 || error.message?.includes("quota")) {
+                console.warn("Imagen quota exceeded. Stopping image generation.");
+                return images;
             }
         }
     }

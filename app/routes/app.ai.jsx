@@ -22,7 +22,19 @@ export const action = async ({ request }) => {
     }
 
     try {
-        // Get AI settings for this shop
+
+        const dbSession = await prisma.session.findFirst({
+            where: { shop },
+            orderBy: { expires: "desc" },
+        });
+
+        const currentCount = dbSession?.productCount || 0;
+        console.log("Current product count for shop:", shop, currentCount);
+
+        if (currentCount >= 5) {
+            return { error: "You have reached the maximum number of AI products (5) allowed on this plan." };
+        }
+
         let settings = await prisma.aiSettings.findUnique({
             where: { shop },
         });
@@ -36,13 +48,11 @@ export const action = async ({ request }) => {
             };
         }
 
-        // Step 1: Generate product text data with AI
         const productData = await generateProductData(productTitle, {
             tone: settings.tone,
             pricingStrategy: settings.pricingStrategy,
         });
 
-        // Step 2: Generate product images with AI
         let images = [];
         let imageError = null;
         try {
@@ -73,7 +83,15 @@ export const action = async ({ request }) => {
             },
         });
 
+        await prisma.session.update({
+            where: { id: session.id },
+            data: {
+                productCount: { increment: 1 },
+            },
+        });
+
         return redirect(`/app/preview?id=${generatedProduct.id}`);
+
     } catch (error) {
         console.error("AI generation error:", error);
         if (error.status === 429) {
