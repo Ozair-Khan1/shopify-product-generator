@@ -9,7 +9,6 @@ export const loader = async ({ request }) => {
     const { session } = await authenticate.admin(request);
     const shop = session.shop;
 
-    // Get or create default settings
     let settings = await prisma.aiSettings.findUnique({
         where: { shop },
     });
@@ -79,7 +78,7 @@ export default function SettingsPage() {
                 <s-stack direction="block" gap="base">
                     {actionData?.success && (
                         <s-banner tone="success" dismissible>
-                            Settings saved successfully!
+                            Settings saved successfully
                         </s-banner>
                     )}
 

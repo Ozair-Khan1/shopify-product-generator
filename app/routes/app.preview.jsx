@@ -30,7 +30,9 @@ export const loader = async ({ request }) => {
         where: { id },
     });
 
-    if (!generatedProduct || generatedProduct.shop !== shop) {
+    if (!generatedProduct) {
+        return redirect("/app/ai");
+    } else if (generatedProduct.shop !== shop) {
         throw new Response("Product not found", { status: 404 });
     }
 

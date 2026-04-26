@@ -1,7 +1,3 @@
-/**
- * AI Preview Component
- * Displays AI-generated product description, features, and SEO fields.
- */
 export default function AIPreview({ productData }) {
     if (!productData) return null;
 

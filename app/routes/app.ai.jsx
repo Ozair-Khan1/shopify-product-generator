@@ -106,10 +106,17 @@ export default function AIGeneratorPage() {
     const navigation = useNavigation();
     const submit = useSubmit();
     const [productTitle, setProductTitle] = useState("");
+    const [error, setError] = useState('');
     const isSubmitting = navigation.state === "submitting";
 
     const handleGenerate = () => {
-        if (!productTitle.trim()) return;
+        if (productTitle.trim() === "") {
+            setError('NULL');
+            return;
+        } else if (productTitle.trim().length < 3) {
+            setError('SHORT');
+            return;
+        }
         const formData = new FormData();
         formData.append("productTitle", productTitle);
         submit(formData, { method: "post" });
@@ -122,6 +129,18 @@ export default function AIGeneratorPage() {
                     {actionData?.error && (
                         <s-banner tone="critical" dismissible>
                             {actionData.error}
+                        </s-banner>
+                    )}
+
+                    {error === 'SHORT' && (
+                        <s-banner tone="critical" onDismiss={() => setError(false)} dismissible>
+                            Product title must be at least 3 characters long.
+                        </s-banner>
+                    )}
+
+                    {error === 'NULL' && (
+                        <s-banner tone="critical" onDismiss={() => setError(false)} dismissible>
+                            Please enter a product title.
                         </s-banner>
                     )}
 
@@ -139,7 +158,7 @@ export default function AIGeneratorPage() {
                                 placeholder="e.g. Premium Wireless Noise-Cancelling Headphones"
                                 helpText="Be specific — the more descriptive your title, the better the AI output."
                                 value={productTitle}
-                                onInput={(e) => setProductTitle(e.currentTarget.value)}
+                                onInput={(e) => { setProductTitle(e.currentTarget.value); setError(''); }}
                             />
 
                             <s-stack direction="inline" gap="base">

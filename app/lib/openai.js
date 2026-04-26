@@ -31,7 +31,7 @@ Given the product title: "${title}"
 
 Generate a COMPLETE product listing with the following requirements:
 
-1. **Description**: Write a high-converting product description (2-3 paragraphs) in HTML format using <p>, <ul>, <li>, <strong> tags. Tone: ${tone}.
+1. **Description**: Write a high-converting product description (1-2 paragraphs) in HTML format using <p>, <ul>, <li>, <strong> tags. Tone: ${tone}.
 
 2. **Bullet Features**: List 4-6 key product features/benefits.
 
